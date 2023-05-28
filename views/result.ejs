@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>FIREFINDER AI RESULTS</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:title" content="FireFinder - An AI Fire Detection App Powered by Azure's Computer Vision">
+		<meta property="og:description" content="Ignite your understanding of fire detection AI and Azure's Computer Vision with our interactive FireFinder app. Designed for developers and AI enthusiasts to delve into the realm of possibilities.">
+		
+		<meta property="og:image" content="https://res.cloudinary.com/dogooderdev/image/upload/v1684357540/FireFinder/firefinder-home_snjzn5.png">
+		<meta property="og:image:width" content="600">
+		<meta property="og:image:height" content="315">
+		
+		<!-- Max file size: 5 MB
+		Minimum image dimensions: 1200 (w) x 627 (h) pixels
+		Recommended ratio: 1.91:1 -->
+		
+		<meta property="og:url" content="https://firefinder-ai.herokuapp.com/">
+		<meta property="og:type" content="website">
+		
+		<meta name="title" content="FireFinder - An AI Fire Detection App Powered by Azure's Computer Vision">
+		<meta name="description" content="Ignite your understanding of fire detection AI and Azure's Computer Vision with our interactive FireFinder app. Designed for developers and AI enthusiasts to delve into the realm of possibilities.">
+		<link rel="icon" type="image/png" href="https://res.cloudinary.com/dogooderdev/image/upload/c_crop,g_north,h_192,w_192,y_78/f_png/firefinder/1684350340085_wpij41.jpg">
+	
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="/public/css/main.css" />	
+		<noscript><link rel="stylesheet" href="/public/css/noscript.css" /></noscript>
+	</head>
+	<body class="landing is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header" class="">
+						<h1><a href="/" class="home-nav">FireFinder<i class="material-icons" style="font-size: 1.5em">whatshot</i></a></h1>
+						<nav id="nav">
+							<ul>
+								<li class="special">
+									<a href="#menu" aria-label="Hamburger Menu Toggle" class="menuToggle"><span>Menu</span></a>
+									<div id="menu">
+										<ul>
+											<li><a href="/">Home</a></li>
+											<li><a href="#upload-another">Activate</a></li>
+											<li><a href="#one">My Results</a></li>
+											<li><a href="#two">Learn More</a></li>
+											<li><a href="#three">FireFacts</a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Banner -->
+					<section id="banner">
+						<div class="inner">
+
+							<!-- Initial Banner Results for Fire -->
+							<h2>FireFinder Results</h2>
+							<div>
+								<i class="material-icons" style="font-size:2em">whatshot</i>
+							</div>
+
+							<!-- Check for Fire -->
+							<% if (locals.count > 0) { %>
+								<!-- Positive for Fire -->						
+								<p>The AI has Detected Fire<br />
+									in Your Image!<br />
+
+								<% }else { %>
+								<!-- Negative for Fire -->
+									<p>The AI has Detected No Fire<br />
+										in Your Image!<br />
+							<% } %>
+
+								Scroll for results!</p>
+							
+							<ul class="actions special">
+								<li><a href="#one" class="button primary scrolly">See Results</a></li>
+							</ul>
+						</div>
+						<a href="#two" class="more scrolly">Learn More</a>
+					</section>
+				
+				<!-- One -->
+					<section id="one" class="wrapper style5 special">
+						<div class="inner">
+							<i class="material-icons" style="font-size:2em">whatshot</i>
+							<header class="major">				
+
+								<!-- Details Positive Result -->
+								<% if (locals.count > 0) { %>
+									
+									<h2>Fire has been detected in your image!</h2>  
+									<!-- Details Positive Result Without Confidence Rating -->
+									<% if (!fireConfidence) { %>
+										<p>The FireFinder AI has analyzed your image and<br />
+											<a href="#two" class="scrolly">fire has been detected</a> with an undefined <a href="#confidence-score" class="scrolly">confidence score</a>.</p>
+										<% }else { %>
+											<!-- Details Positive Result With Confidence Rating -->
+											<p>The FireFinder AI has analyzed your image and<br />
+												<a href="#two" class="scrolly">fire has been detected</a> with a <a href="#confidence-score" class="scrolly">confidence score of <%= fireConfidence%> percent</a>.</p> 
+									<% } %> 
+										<div id="image-uploaded" class="image" >
+											<img src='<%= img%>' alt='<%= description%>'> 
+										</div>
+									<% }else { %>
+
+										<!-- Details Negative Result -->
+										<h2>Your image is negative for fire!</h2> 
+										<p>The FireFinder AI has analyzed your image and<br />
+											<a href="#two" class="scrolly">no fire has been detected</a>. Try <a href="#upload-another" class="scrolly">another photo</a> with FireFinder!</p>
+										<div id="image-uploaded" class="image" >
+											<img src='<%= img%>' alt='<%= description%>'> 
+										</div>				
+									<% } %>
+								<ul id="upload-another" class="actions stacked links">
+									<li><a href="#two" class="scrolly">Tell me how the AI knows</a><br /></li>
+									<li><a href="#three" class="scrolly">Show me my industry FireFact</a></li>
+								</ul>	
+							</header>
+							<section id="upload-form">
+								<h4>Upload Another Image</h4>
+								<form action="/" enctype="multipart/form-data" method="post">
+										<div>
+											<ul class="actions stacked">
+												<li>
+													<!-- Upload which is hidden -->
+													<input type="file" id="actual-btn" name="file-to-upload" hidden/>
+
+													<!-- Custom upload button -->
+													<label for="actual-btn" class="choose-image button fit">Choose Image</label>
+
+													<!-- Name of file chosen -->
+													<p id="file-chosen">No image chosen: jpg, jpeg, png < 4mb</p>
+												</li>
+												<li><input type="submit" value="Upload" class="primary button fit" /></li>
+											</ul>
+										</div>
+								</form>
+							</section>
+						</div>
+					</section>
+
+				<!-- Two -->
+					<section id="two" class="wrapper alt style2">
+						<section class="spotlight">
+							<div class="image"><img src="https://res.cloudinary.com/dogooderdev/image/upload/c_fill,h_529,w_748/firefinder/fire2_zfwrwa.jpg" alt="A close up of a thistle plant on fire" /></div><div class="content">
+								<h2>How is FireFinder using AI<br />
+									to detect fire?</h2>
+								<p>The FireFinder app uses Azure's Cognitive Services Computer Vision, a machine learning algorithm that can "see" and understand the contents of images. When you upload an image to the FireFinder application, it analyzes the image via the API and provides you with information about what is in the image. In this case, it's looking for fire.</p>
+							</div>
+						</section>
+						<section class="spotlight">
+							<div class="image"><img src="https://res.cloudinary.com/dogooderdev/image/upload/c_fill,h_529,w_748/firefinder/44_sutppw.jpg" alt="A close up of a small pile of wood on fire with crackling fire and glowing embers" /></div><div class="content">
+								<h2>How is FireFinder specifically<br />
+									detecting fire?</h2>
+								<p>The algorithm has been trained on a large dataset of images that contain fire. During the training process, the algorithm "learned" what features are common to images that contain fire. This could include things like the color of flames, the shape and texture of the fire, and patterns that could indicate the amount of heat being emitted.</p>
+							</div>
+						</section>
+						<section id="confidence-score" class="spotlight">
+							<div class="image"><img src="https://res.cloudinary.com/dogooderdev/image/upload/c_fill,h_529,w_748/firefinder/fire7_kxfkyz.jpg" alt="A close up of a small pile of sticks on fire, with the flames licking upwards" /></div><div class="content">
+								<h2>When you upload an image<br />
+									to FireFinder</h2>
+								<p>Once you upload an image, the algorithm analyzes the image and compares it to the patterns learned during training to determine if it contains any signs of fire. If fire is detected, the algorithm flags the image as containing fire and predicts the likelihood of the detection with a confidence score, which can be useful for filtering or prioritizing results based on an assigned threshold.</p>
+							</div>
+						</section>
+						<section class="spotlight">
+							<div class="image"><img src="https://res.cloudinary.com/dogooderdev/image/upload/c_fill,h_529,w_748/firefinder/fire5_amopx9.jpg" alt="Two firefighters walking amidst smoke and flames outdoors" /></div><div class="content">
+								<h2>Understanding fire detection<br />
+									with FireFinder</h2>
+								<p>In essence, the Computer Vision algorithm works by looking for specific patterns and comparing those patterns to patterns it has learned during training. This allows it to identify specific objects or characteristics in an image, such as the presence of fire. With continuous analysis of multiple frames over time, this technology can be used for mission critical services to track live fires in real time using event driven algorithms.</p>
+							</div>
+						</section>
+					</section>
+
+				<!-- Three -->
+					<section id="three" class="wrapper style5 special">
+						<div class="inner">
+							<i class="material-icons" style="font-size:2em">whatshot</i>
+							<header class="major">
+								<h2>FireFacts from FireFinder</h2>
+								<p>Each time you upload an image, a new industry FireFact like this will generate<br />
+									to tell you how AI is being used around the world to detect, suppress, and prevent fires.</p>
+							</header>
+							<div id="feature-result" class="special">
+								<div id="result-card">
+									<!-- Chooses a Random FireFact -->
+									<% let fireFacts = [
+										{
+											icon: "forest",
+											title: "Forest fire detection",
+											content: "The company Descartes Labs, located in New Mexico, uses AI fire detection to help identify and track wildfires. The system analyzes satellite imagery to detect changes in vegetation and identify potential fires, alerting authorities to take action before the fire spreads too far."
+										},
+										{
+											icon: "location_city",
+											title: "Industrial fire detection",
+											content: "The company X-Sense, based in China, uses AI fire detection in its smart smoke detectors for industrial and residential settings. The detectors use advanced algorithms to differentiate between smoke from cooking or vaping and smoke from an actual fire, reducing false alarms and improving response times."
+										},
+										{
+											icon: "house",
+											title: "Smart home fire detection",
+											content: "The company Nest, based in California, uses AI fire detection in its smart home devices, including smoke detectors and cameras. The system uses machine learning to recognize patterns and behaviors that indicate a potential fire, such as a sudden temperature change or the sound of a smoke alarm, and sends alerts to the homeowner's phone."
+										},
+										{
+											icon: "local_fire_department",
+											title: "Wildfire suppression",
+											content: "The company Technosylva, based in California, uses AI fire detection in its wildfire management software. The system uses machine learning to analyze data from sensors, cameras, and other sources to predict the spread of a wildfire and recommend the most effective strategies for containing it."
+										},
+										{
+											icon: "apartment",
+											title: "Urban fire prevention",
+											content: "The company FireNinja, based in Singapore, uses AI fire detection to assess fire risk in urban areas. The system analyzes data on building construction, occupancy, and other factors to identify areas that are at high risk of fire and recommend preventive measures to reduce that risk."
+										},
+										{
+											icon: "security",
+											title: "Firefighter safety",
+											content: "ThunderCloud, a company based in Texas, uses AI fire detection to provide real-time information on fire conditions to firefighters. The system uses sensors and other sources to monitor temperature, smoke levels, and other factors and transmit that information to a mobile app that firefighters can use to make more informed decisions."
+										},
+										{
+											icon: "agriculture",
+											title: "Agricultural fire detection",
+											content: "Syngenta, a company based in Switzerland, uses AI fire detection to help farmers and ranchers prevent accidental fires caused by controlled burns. The system analyzes weather data and other factors to recommend the best time for controlled burns, reducing the risk of a fire getting out of control."
+										},
+										{
+											icon: "water",
+											title: "Marine Fire Suppression",
+											content: "The company FFE, based in the United Kingdom, uses AI fire detection in its marine fire suppression systems. The system uses machine learning to analyze data from sensors and cameras on board ships to detect fires early on and trigger the appropriate fire suppression systems."
+										},
+										{
+											icon: "pets",
+											title: "Wildlife fire prevention",
+											content: "IntelliView Technologies, located in Canada, uses AI fire detection in its early wildfire detection system for remote and environmentally sensitive locations. By employing thermal cameras and machine learning, the system detects wildfires early on, reducing damage to wildlife habitats and preventing loss of life."
+										},
+										{
+											icon: "flight_takeoff",
+											title: "Airport fire prevention",
+											content: "Bosch, a renowned German company, deploys advanced AI algorithms in its airport safety systems. By analyzing data from sensors and cameras using machine learning, the system identifies potential fire hazards by detecting signs of fire or fire-related risks, preventing fires in critical areas including airport hangars, terminals, and baggage handling zones, ensuring passenger safety and heightened airport operations."
+										},
+										{
+											icon: "engineering",
+											title: "Mining fire detection",
+											content: "Pyroscan-U, an Australian company, uses AI fire detection in its mining safety systems. Through machine learning analysis of data from sensors and cameras, the system continuously monitors the underground mine environment for signs of fire, such as abnormal heat levels, smoke, or other indicators, preventing costly equipment damage and ensuring the safety of miners working in these hazardous environments."
+											},											
+										];
+										let randomFireFact = fireFacts[Math.floor(Math.random() * fireFacts.length)];
+										%>
+									<div>
+										<i class="material-icons" style="font-size: 2.5em; margin-bottom: .5em;"><%= randomFireFact.icon %></i>
+									</div>						
+									<h3><%= randomFireFact.title %></h3>
+									<p><%= randomFireFact.content %></p>
+									<ul class="icons major">
+										<li><span class="icon solid fa-shield-alt major style1"><span class="label">Fire Protection</span></span></li>
+										<li><span class="icon solid fa-broadcast-tower major style1"><span class="label">Communication</span></span></li>
+										<li><span class="icon solid fa-code major style1"><span class="label">Code and AI</span></span></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</section>
+
+				<!-- CTA -->
+					<section id="cta" class="wrapper style4">
+						<div class="inner">
+							<header>	    
+								<h2>Activate the AI FireFinder</h2>
+								<p>Upload an image now to discover the power and potential of AI in fire detection with FireFinder.</p>
+							</header>
+							<ul class="actions stacked">
+								<li><a href="#upload-another" class="button fit primary scrolly">Activate</a></li>
+								<li><a href="#one" class="button fit scrolly standard">My Results</a></li>
+							</ul>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<ul class="icons">
+							<li><a href="https://twitter.com/kriston_dev" aria-label="Kriston Burnstein's Twitter Link" class="icon brands fa-twitter" target=”_blank”><span class="label">Twitter</span></a></li>
+							<li><a href="https://github.com/kriston-burnstein" aria-label="Kriston Burnstein's GitHub Link" class="icon brands fa-github" target=”_blank”><span class="label">GitHub</span></a></li>
+							<li><a href="https://www.linkedin.com/in/kriston-burnstein/" aria-label="Kriston Burnstein's LinkedIn Link" class="icon brands fa-linkedin" target=”_blank”><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://www.youtube.com/@kristonburnstein" aria-label="Kriston Burnstein's YouTube Link" class="icon brands fa-youtube" target=”_blank”><span class="label">YouTube</span></a></li>
+							<li><a href="https://kristonburnstein.com/" aria-label="Kriston Burnstein's Website Link" class="icon solid fa-globe" target=”_blank”><span class="label">Website</span></a></li>
+							<li><a href="mailto:kriston.burnstein.com" aria-label="Send an Email to Kriston Burnstein" class="icon solid fa-envelope"><span class="label">Email</span></a></li>	
+						</ul>
+						<ul class="copyright">
+							<li>&copy; FireFinder<i class="material-icons" style="font-size:1.3em">whatshot</i> AI Fire Detection</li><li>By <a href="https://kristonburnstein.com/">Kriston Burnstein</a></li>
+						</ul>
+					</footer>
+			</div>
+
+		<!-- Scripts -->
+			<script src="/js/jquery.min.js"></script>
+			<script src="/js/jquery.scrollex.min.js"></script>
+			<script src="/js/jquery.scrolly.min.js"></script>
+			<script src="/js/browser.min.js"></script>
+			<script src="/js/breakpoints.min.js"></script>
+			<script src="/js/util.js"></script>
+			<script src="/js/main.js"></script>
+	</body>
+</html>

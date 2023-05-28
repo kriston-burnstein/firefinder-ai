@@ -1,0 +1,22 @@
+{
+  "name": "ai-firefinder",
+  "version": "1.0.0",
+  "description": "AI Fire Detection Powered by Azure Computer Vision",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Kriston Burnstein",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/cognitiveservices-computervision": "^8.1.0",
+    "async": "^3.2.0",
+    "axios": "^0.21.1",
+    "cloudinary": "^1.26.1",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "multer": "^1.4.5-lts.1"
+  }
+}
