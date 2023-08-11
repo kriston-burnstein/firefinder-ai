@@ -1,4 +1,6 @@
 node_modules
 .env
+.DS_Store
+**/.DS_Store
 app-optimizations.js
 main-optimizations.css
